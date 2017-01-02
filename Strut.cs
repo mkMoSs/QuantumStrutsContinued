@@ -31,10 +31,10 @@ using KSP;
 using System;
 using UnityEngine;
 
-namespace QuantumStrut
-{
-	class Strut
-	{
+namespace QuantumStrut {
+
+	class Strut {
+
 		public bool isDestroyed = false;
 		Material _material = null;
 
@@ -43,13 +43,10 @@ namespace QuantumStrut
 			set
 			{
 				_material = value;
-				if (Material != null)
+				if(Material != null)
 					lr.material = Material;
 			}
-			get
-			{
-				return _material;
-			}
+			get { return _material; }
 		}
 
 		Color _startColor = Color.white;
@@ -61,10 +58,7 @@ namespace QuantumStrut
 				_startColor = value;
 				lr.SetColors(StartColor, EndColor);
 			}
-			get
-			{
-				return _startColor;
-			}
+			get { return _startColor; }
 		}
 
 		Color _endColor = Color.white;
@@ -76,10 +70,7 @@ namespace QuantumStrut
 				_endColor = value;
 				lr.SetColors(StartColor, EndColor);
 			}
-			get
-			{
-				return _endColor;
-			}
+			get { return _endColor; }
 		}
 
 		float _startSize = 0;
@@ -91,10 +82,7 @@ namespace QuantumStrut
 				_startSize = value;
 				lr.SetWidth(StartSize, EndSize);
 			}
-			get
-			{
-				return _startSize;
-			}
+			get { return _startSize; }
 		}
 
 		float _endSize = 0;
@@ -106,10 +94,7 @@ namespace QuantumStrut
 				_endSize = value;
 				lr.SetWidth(StartSize, EndSize);
 			}
-			get
-			{
-				return _endSize;
-			}
+			get { return _endSize; }
 		}
 
 		ConfigurableJoint joint;
@@ -120,34 +105,26 @@ namespace QuantumStrut
 		GameObject LineObj = null;
 		LineRenderer lr = null;
 
-		public void print(object body, params object[] args)
-		{
+		public void print(object body, params object[] args) {
 			string final = body.ToString();
-			for (int I = 0; I < args.Length; I++)
-			{
-				final = final.Replace("{" + I + "}", args[I].ToString());
-			}
+			for(int I = 0; I < args.Length; I++) { final = final.Replace("{" + I + "}", args[I].ToString()); }
 			MonoBehaviour.print("[AutoStrut] " + final);
 		}
 
-		void DrawLine(Vector3 origin, Vector3 end)
-		{
-			if (Util.isValid(lr))
-			{
+		void DrawLine(Vector3 origin, Vector3 end) {
+			if(Util.isValid(lr)) {
 				lr.SetPosition(0, origin);
 				lr.SetPosition(1, end);
 			}
 		}
 
-		public Strut(Part parent, Part target, Vector3 targetOffset, Transform parentTransform)
-		{
+		public Strut(Part parent, Part target, Vector3 targetOffset, Transform parentTransform) {
 			this.parent = parent;
 			this.target = target;
 			this.targetOffset = targetOffset;
 			this.parentTransform = parentTransform;
 
-			if (parent.vessel.parts.Contains(target))
-			{
+			if(parent.vessel.parts.Contains(target)) {
 				joint = parent.parent.gameObject.AddComponent<ConfigurableJoint>();
 				joint.connectedBody = target.Rigidbody;
 
@@ -157,8 +134,8 @@ namespace QuantumStrut
 					Vector3.Distance(
 						parentTransform.position,
 						target.transform.TransformPoint(targetOffset)
-					) / 2
-				);
+						) / 2
+					);
 				joint.axis = new Vector3(0, 0, 1);
 				joint.xMotion = ConfigurableJointMotion.Locked;
 				joint.yMotion = ConfigurableJointMotion.Locked;
@@ -183,37 +160,30 @@ namespace QuantumStrut
 				lr.SetPosition(0, Vector3.zero);
 				lr.SetPosition(1, Vector3.zero);
 			}
-			else
-			{
-				Destroy();
-			}
+			else { Destroy(); }
 		}
 
-		public void Update()
-		{
-			if (Util.isValid(parent) && Util.isValid(target) && Util.isValid(parent.vessel) && parent.vessel.parts.Contains(target))
-			{
+		public void Update() {
+			if(Util.isValid(parent) && Util.isValid(target) && Util.isValid(parent.vessel) && parent.vessel.parts.Contains(target)) {
 				Vector3 start = parentTransform.position;
 				Vector3 end = target.transform.TransformPoint(targetOffset);
 				DrawLine(start, end);
 			}
-			else
-			{
+			else {
 				DrawLine(Vector3.zero, Vector3.zero);
 				Destroy();
 			}
 		}
 
-		public void Destroy()
-		{
+		public void Destroy() {
 			DrawLine(Vector3.zero, Vector3.zero);
-			if (Util.isValid(joint))
+			if(Util.isValid(joint))
 				GameObject.DestroyImmediate(joint);
 
-			if (Util.isValid(lr))
+			if(Util.isValid(lr))
 				GameObject.DestroyImmediate(lr);
 
-			if (Util.isValid(LineObj))
+			if(Util.isValid(LineObj))
 				GameObject.DestroyImmediate(LineObj);
 
 			joint = null;
@@ -226,5 +196,7 @@ namespace QuantumStrut
 			targetOffset = Vector3.zero;
 			isDestroyed = true;
 		}
+
 	}
+
 }

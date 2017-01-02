@@ -124,22 +124,22 @@
   </ProjectExtensions>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\_KSPAssemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Games\Steam\SteamApps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="KSPAssets">
+      <HintPath>..\..\..\Games\Steam\SteamApps\common\Kerbal Space Program\KSP_x64_Data\Managed\KSPAssets.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>..\_KSPAssemblies\System.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\_KSPAssemblies\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\Games\Steam\SteamApps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="KSPUtil">
-      <HintPath>..\_KSPAssemblies\KSPUtil.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\_KSPAssemblies\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\Games\Steam\SteamApps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

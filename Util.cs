@@ -32,28 +32,25 @@ using System;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace QuantumStrut
-{
-	public static class Util
-	{
+namespace QuantumStrut {
+
+	public static class Util {
+
 		static System.Random r = new System.Random();
 
-		public static float Random(float min, float max)
-		{
-			return (float)((r.NextDouble() * (max - min)) + min);
+		public static float Random(float min, float max) {
+			return (float) ((r.NextDouble() * (max - min)) + min);
 		}
 
-		public static float Random()
-		{
-			return (float)r.NextDouble();
+		public static float Random() {
+			return (float) r.NextDouble();
 		}
 
-		public static Part getTank(Part parent)
-		{
-			if (parent.Resources.Count != 0)
+		public static Part getTank(Part parent) {
+			if(parent.Resources.Count != 0)
 				return parent;
 
-			if (isValid(parent.parent) && parent.fuelCrossFeed)
+			if(isValid(parent.parent) && parent.fuelCrossFeed)
 				return getTank(parent.parent);
 
 			return null;
@@ -63,42 +60,34 @@ namespace QuantumStrut
 		{
 			get
 			{
-				if (isValid(FlightGlobals.fetch.activeVessel) && FlightGlobals.fetch.activeVessel.isEVA)
+				if(isValid(FlightGlobals.fetch.activeVessel) && FlightGlobals.fetch.activeVessel.isEVA)
 					return FlightGlobals.fetch.activeVessel;
 				return null;
 			}
 		}
 
-		public static bool isValid(UnityEngine.Object obj)
-		{
+		public static bool isValid(UnityEngine.Object obj) {
 			return (obj && obj != null);
 		}
 
-		public static void printObj(object obj)
-		{
-			using (KSP.IO.TextWriter writer = TextWriter.CreateForType<string>("obj.cs"))
-			{
+		public static void printObj(object obj) {
+			using (KSP.IO.TextWriter writer = TextWriter.CreateForType<string>("obj.cs")) {
 				string str = printProperties(obj, TypeDescriptor.GetProperties(obj), 0);
 				writer.Write(str);
 				MonoBehaviour.print(str);
 			}
 		}
 
-		static string printProperties(object obj, PropertyDescriptorCollection collection, int I)
-		{
-			if (I > 2)
+		static string printProperties(object obj, PropertyDescriptorCollection collection, int I) {
+			if(I > 2)
 				return "";
 
 			string prefix = "";
 			string str = "";
-			for (int T = 0; T < I; T++)
-			{
-				prefix += "    ";
-			}
+			for(int T = 0; T < I; T++) { prefix += "    "; }
 
 			PropertyDescriptor d;
-			for (int i = 0; i < collection.Count; i++)
-			{
+			for(int i = 0; i < collection.Count; i++) {
 				d = collection[i];
 
 				str += "\n" + prefix + d.Name + " = " + d.GetValue(obj);
@@ -106,19 +95,14 @@ namespace QuantumStrut
 			return str;
 		}
 
-		public static Part partFromGameObject(GameObject ob)
-		{
+		public static Part partFromGameObject(GameObject ob) {
 			GameObject o = ob;
 
-			while (o)
-			{
+			while(o) {
 				Part p = Part.FromGO(o);
-				if (p && p != null)
-				{
-					return p;
-				}
+				if(p && p != null) { return p; }
 
-				if (o.transform.parent)
+				if(o.transform.parent)
 					o = o.transform.parent.gameObject;
 				else
 					return null;
@@ -126,29 +110,27 @@ namespace QuantumStrut
 			return null;
 		}
 
-		public static Part partFromRaycast(RaycastHit hit)
-		{
+		public static Part partFromRaycast(RaycastHit hit) {
 			return partFromGameObject(hit.collider.gameObject);
 		}
 
-		public static float GetEnergy(Vessel vessel)
-		{
+		public static float GetEnergy(Vessel vessel) {
 			double energy = 0;
 			Part p;
-			for (int pIdx = 0; pIdx < vessel.parts.Count; pIdx++)
-			{
+			for(int pIdx = 0; pIdx < vessel.parts.Count; pIdx++) {
 				p = vessel.parts[pIdx];
 
 				PartResource r;
-				for (int rIdx = 0; rIdx < p.Resources.Count; rIdx++)
-				{
+				for(int rIdx = 0; rIdx < p.Resources.Count; rIdx++) {
 					r = p.Resources[rIdx];
 
-					if (r.resourceName == "ElectricCharge")
+					if(r.resourceName == "ElectricCharge")
 						energy += r.amount;
 				}
 			}
-			return (float)energy;
+			return (float) energy;
 		}
+
 	}
+
 }
